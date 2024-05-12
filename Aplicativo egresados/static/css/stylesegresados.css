@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #d7e5f2;
+
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.flashes {
+    padding: 10px;
+    list-style-type: none;
+}
+
+.flashes li {
+    margin-bottom: 5px;
+    padding: 10px;
+}
+
+.flashes .success {
+    background-color: #dff0d8;
+    border-color: #d0e9c6;
+    color: #3c763d;
+}
+
+.flashes .error {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+}
+
+.flashes .warning {
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+    color: #8a6d3b;
+}
+.volver-btn-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}

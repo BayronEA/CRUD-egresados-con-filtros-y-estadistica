@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
+    <title>Crear usuario</title>
+</head>
+<body style="background-color: #d7e5f2;">
+    <div class="container">
+        <!-- Confirmación modal -->
+        <div id="confirmacionModal" class="modal">
+            <div class="modal-contenido" style="background-color: #d7e5f2;">
+                <div id="mensajeYBoton">
+                    <h1>Bienvenido</h1>
+                    <p>Para acceder a la creación de usuarios, debes verificar que eres un superusuario.</p>
+                    <button id="crearUsuarioBtn" onclick="verificarSuperusuario()" class="btn btn-primary">Crear Usuario</button>
+                </div>
+                <div id="otrosBotones" class="mt-3">
+                    <button id="visualizarDatosBtn" onclick="visualizarDatos()" class="btn btn-success">Visualizar Datos</button>
+                    <a href="/crearegresado" class="btn btn-primary">Agregar Datos de Egresados</a>
+                </div>
+            </div>
+            <button onclick="window.location.href='/'" class="btn-cerrar-sesion">Cerrar Sesión</button>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function mostrarConfirmacion() {
+            var modal = document.getElementById('confirmacionModal');
+            modal.style.display = 'block';
+        }
+
+        function cerrarConfirmacion() {
+            var modal = document.getElementById('confirmacionModal');
+            modal.style.display = 'none';
+        }
+
+        function verificarSuperusuario() {
+            try {
+                var username = prompt("Ingrese el nombre de usuario del superusuario:");
+                var password = prompt("Ingrese la contraseña del superusuario:");
+
+                // Realiza una solicitud AJAX al servidor para verificar las credenciales
+                fetch('/verificar_superusuario', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Verificación exitosa, redirige al usuario a la página de creación de usuarios
+                        window.location.href = '/crearusuario';
+                    } else {
+                        // Muestra un mensaje indicando que no tiene permisos
+                        alert('Verificación de superusuario fallida. No tiene permisos.');
+                        cerrarConfirmacion();
+                        // Redirige a la página principal u otra página adecuada
+                        window.location.href = 'main';
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error en verificarSuperusuario:', error);
+                    cerrarConfirmacion();
+                });
+            } catch (error) {
+                console.error('Error general:', error);
+                cerrarConfirmacion();
+            }
+        }
+
+        // Función para visualizar datos
+        function visualizarDatos() {
+            // Redirige al usuario a la página de visualización de datos
+            window.location.href = '/visualizardatos';
+        }
+
+        window.addEventListener('popstate', function (event) {
+            location.reload(true);
+        });
+
+        // Muestra el modal cuando se carga la página
+        mostrarConfirmacion();
+    </script>
+</body>
+</html>

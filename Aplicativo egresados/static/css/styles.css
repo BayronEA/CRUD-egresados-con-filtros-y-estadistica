@@ -1,0 +1,58 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #d7e5f2; /* Beige claro */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    text-align: center;
+    margin-top: 50px; /* Espacio superior */
+}
+
+/* Estilos para el contenedor del mensaje y el primer botón (crear usuario) */
+#mensajeYBoton {
+    margin-bottom: 20px; /* Espaciado inferior para separar del siguiente botón */
+}
+
+/* Estilos para el primer botón (crear usuario) */
+#crearUsuarioBtn {
+    margin-right: 10px; /* Espaciado derecho para separar del próximo botón (si hay más) */
+}
+
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+
+.modal-contenido {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.btn-secondary {
+    margin-top: 20px; /* Espaciado superior para separar del resto del contenido */
+}
+
+.btn-cerrar-sesion {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #6c757d;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-cerrar-sesion:hover {
+    background-color: #495057;
+}

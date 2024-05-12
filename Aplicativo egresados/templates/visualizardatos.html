@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Datos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesvisualizardatos.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="datos-egresados-container">
+            <h2 class="mt-4">Datos de los Egresados</h2>
+            <div class="table-container">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Carrera</th>
+                            <th>Año de Graduación</th>
+                            <th>Salario Promedio</th>
+                            <th>Continua Estudios</th>
+                            <th>Tiempo para Conseguir Empleo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-egresados-body">
+                        {% for egresado in egresados %}
+                        <tr>
+                            <td>{{ egresado[0]  }}</td>
+                            <td>{{ egresado[1] }}</td>
+                            <td>{{ egresado[2] }}</td>
+                            <td>{{ egresado[3] }}</td>
+                            <td>{{ egresado[4] }}</td>
+                            <td>{{ "Sí" if egresado[5] else "No" }}</td>
+                            <td>{{ egresado[6] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="filtro">
+        <h2>Filtrar datos de egresados</h2>
+        <div class="filtro-carrera">
+            <label for="filtro-carrera">Filtrar por carrera:</label>
+            <select id="filtro-carrera">
+                <option value="" selected disabled>Seleccionar Carrera</option>
+                <option value="Administración de Empresas">Administración de Empresas</option>
+                <option value="Arquitectura">Arquitectura</option>
+                <option value="Artes Visuales">Artes Visuales</option>
+                <option value="Bacteriología y Laboratorio Clínico">Bacteriología y Laboratorio Clínico</option>
+                <option value="Biología">Biología</option>
+                <option value="Comunicación Social">Comunicación Social</option>
+                <option value="Contaduría Pública">Contaduría Pública</option>
+                <option value="Derecho">Derecho</option>
+                <option value="Diseño Industrial">Diseño Industrial</option>
+                <option value="Economía">Economía</option>
+                <option value="Enfermería">Enfermería</option>
+                <option value="Física">Física</option>
+                <option value="Fisioterapia">Fisioterapia</option>
+                <option value="Fonoaudiología">Fonoaudiología</option>
+                <option value="Geología">Geología</option>
+                <option value="Ingeniería Agronómica">Ingeniería Agronómica</option>
+                <option value="Ingeniería Ambiental">Ingeniería Ambiental</option>
+                <option value="Ingeniería Civil">Ingeniería Civil</option>
+                <option value="Ingeniería de Alimentos">Ingeniería de Alimentos</option>
+                <option value="Ingeniería de Sistemas">Ingeniería de Sistemas</option>
+                <option value="Ingeniería Electrónica">Ingeniería Electrónica</option>
+                <option value="Ingeniería Eléctrica">Ingeniería Eléctrica</option>
+                <option value="Ingeniería Industrial">Ingeniería Industrial</option>
+                <option value="Ingeniería Mecánica">Ingeniería Mecánica</option>
+                <option value="Ingeniería Mecatrónica">Ingeniería Mecatrónica</option>
+                <option value="Ingeniería en Telecomunicaciones">Ingeniería en Telecomunicaciones</option>
+                <option value="Lic. en Ciencias Sociales y Desarrollo Local">Lic. en Ciencias Sociales y Desarrollo Local</option>
+                <option value="Lic. en Educación Física, Recreación y Deportes">Lic. en Educación Física, Recreación y Deportes</option>
+                <option value="Lic. en Educación Infantil">Lic. en Educación Infantil</option>
+                <option value="Lic. en Educación Artística">Lic. en Educación Artística</option>
+                <option value="Lic. en Lenguas Extranjeras">Lic. en Lenguas Extranjeras</option>
+                <option value="Lengua Castellana y Comunicación">Lengua Castellana y Comunicación</option>
+                <option value="Matemáticas Aplicada">Matemáticas Aplicada</option>
+                <option value="Medicina">Medicina</option>
+                <option value="Medicina Veterinaria">Medicina Veterinaria</option>
+                <option value="Microbiología">Microbiología</option>
+                <option value="Música">Música</option>
+                <option value="Nutrición y Dietética">Nutrición y Dietética</option>
+                <option value="Psicología">Psicología</option>
+                <option value="Química">Química</option>
+                <option value="Terapia Ocupacional">Terapia Ocupacional</option>
+                <option value="Zootecnia">Zootecnia</option>
+            </select>
+        </div>
+        <div class="filtro-graduacion">
+            <label for="filtro-graduacion">Filtrar por año de graduación:</label>
+            <input type="number" id="filtro-graduacion" min="1900" max="2100"> 
+        </div>
+        <div class="filtro-salario">
+            <label for="filtro-salario">Filtrar por salario (rango):</label>
+            <input type="number" id="filtro-salario-min" placeholder="Mínimo">
+            <input type="number" id="filtro-salario-max" placeholder="Máximo">
+        </div>
+        <div class="filtro-continuacion">
+            <label for="filtro-continuacion">Filtrar por continuación de estudios:</label>
+            <select id="filtro-continuacion">
+                <option value="" selected disabled></option>
+                <option value="1">Sí</option>
+                <option value="0">No</option>
+            </select>
+        </div>
+        <div class="filtro-tiempo-empleo">
+            <label for="filtro-tiempo-empleo">Filtrar por tiempo de conseguir empleo:</label>
+            <input type="number" id="filtro-tiempo-empleo" min="0">
+        </div>
+                       <div class="filtro-buttons">
+                    <button onclick="aplicarFiltro()">Aplicar Filtro</button>
+                    <button onclick="limpiarFiltros()">Limpiar Filtros</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="grafico-container"></div>
+    <div class="botones-container">
+        <button onclick="generarGrafico()" class="btn btn-primary">Generar Gráfico</button>
+        <a href="/main" class="btn btn-secondary">Volver</a>
+    </div>
+    <script src="{{ url_for('static', filename='js/filtro.js') }}"></script>
+</body>
+</html>
